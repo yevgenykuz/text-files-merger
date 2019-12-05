@@ -8,24 +8,24 @@ logging.basicConfig(format='[%(asctime)s] %(levelname)-8s | %(message)s',
 log = logging.getLogger()
 
 args_parser = argparse.ArgumentParser(description='Merges two or more text files')
-args_parser.add_argument('-path', dest='path', default='files',
+args_parser.add_argument('-p', dest='path', default='files',
                          help='The path to the directory that contains the files to merge (default is \'files\')')
-args_parser.add_argument('-ext', dest='file_extension', default='',
+args_parser.add_argument('-e', dest='file_extension', default='',
                          help='The extension of the files to merge (merges everything by default)')
-args_parser.add_argument('-out', dest='out_file', default='output.txt',
+args_parser.add_argument('-o', dest='out_file', default='output.txt',
                          help='Merged lines output file name')
-args_parser.add_argument('-no_duplicates', dest='no_duplicates', action='store_true',
+args_parser.add_argument('-d', dest='no_duplicates', action='store_true',
                          help='Prevent duplicate lines')
-args_parser.add_argument('-sort', dest='sort', action='store_true',
+args_parser.add_argument('-s', dest='sort', action='store_true',
                          help='Sort merged lines')
-args_parser.add_argument('-prefix_before', dest='prefix_before', default='',
+args_parser.add_argument('-pb', dest='prefix_before', default='',
                          help='The prefix to replace in each line before merging. -prefix_after must be provided')
-args_parser.add_argument('-prefix_after', dest='prefix_after', default='',
+args_parser.add_argument('-pa', dest='prefix_after', default='',
                          help='The new prefix each line before merging. If -prefix_before was not provided, '
                               'this will be used to strip the prefix by splitting the line and removing the first part')
-args_parser.add_argument('-suffix_before', dest='suffix_before', default='',
+args_parser.add_argument('-sb', dest='suffix_before', default='',
                          help='The suffix to replace in each line before merging. -suffix_after must be provided')
-args_parser.add_argument('-suffix_after', dest='suffix_after', default='',
+args_parser.add_argument('-sa', dest='suffix_after', default='',
                          help='The new suffix each line before merging. If -suffix_before was not provided, '
                               'this will be used to strip the suffix by splitting the line and removing the last part')
 
@@ -72,7 +72,12 @@ class TextFilesMerger:
             log.info('\'{}\' files in \'{}\' will be merged.'.format(self.file_extension, self.path))
 
         all_lines = []
-        for file in glob.glob(os.path.join(self.path, file_pattern), recursive=True):
+        files = glob.glob(os.path.join(self.path, file_pattern), recursive=True)
+        if len(files) == 0:
+            log.info('No files found in \'{}\''.format(self.path))
+            return
+
+        for file in files:
             if os.path.isdir(file):
                 continue
             log.info('Merging lines from: {}'.format(file))
