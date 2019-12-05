@@ -44,7 +44,7 @@ class TextFilesMerger:
         out_file: Merged lines output file name
         no_duplicates: If True, prevents duplicate lines
         prefix_before: The prefix to replace in each line before merging. prefix_after must be provided
-        prefix_after: The new prefix each line before merging. If -prefix_after was not provided,
+        prefix_after: The new prefix each line before merging. If -prefix_before was not provided,
             this will be used to strip the prefix by splitting the line and removing the first part
         suffix_before: The suffix to replace in each line before merging. suffix_after must be provided
         suffix_after: The new suffix each line before merging. If -suffix_before was not provided,
