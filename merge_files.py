@@ -21,7 +21,7 @@ args_parser.add_argument('-sort', dest='sort', action='store_true',
 args_parser.add_argument('-prefix_before', dest='prefix_before', default='',
                          help='The prefix to replace in each line before merging. -prefix_after must be provided')
 args_parser.add_argument('-prefix_after', dest='prefix_after', default='',
-                         help='The new prefix each line before merging. If -prefix_after was not provided, '
+                         help='The new prefix each line before merging. If -prefix_before was not provided, '
                               'this will be used to strip the prefix by splitting the line and removing the first part')
 args_parser.add_argument('-suffix_before', dest='suffix_before', default='',
                          help='The suffix to replace in each line before merging. -suffix_after must be provided')
@@ -34,8 +34,8 @@ class TextFilesMerger:
     """ Merges two or more text files, line by line.
 
     Optional features:
-     - Remove duplicate lines
-     - Sort merged lines
+     - Duplicate lines removal
+     - Merged lines sorting
      - Prefix and suffix alteration before merging
 
     Args:
@@ -44,9 +44,11 @@ class TextFilesMerger:
         out_file: Merged lines output file name
         no_duplicates: If True, prevents duplicate lines
         prefix_before: The prefix to replace in each line before merging. prefix_after must be provided
-        prefix_after: The new prefix each line before merging. prefix_before must be provided
+        prefix_after: The new prefix each line before merging. If -prefix_after was not provided,
+            this will be used to strip the prefix by splitting the line and removing the first part
         suffix_before: The suffix to replace in each line before merging. suffix_after must be provided
-        suffix_after: The new suffix each line before merging. suffix_before must be provided
+        suffix_after: The new suffix each line before merging. If -suffix_before was not provided,
+            this will be used to strip the suffix by splitting the line and removing the last part
     """
 
     def __init__(self, path, file_extension, out_file, no_duplicates, sort, prefix_before, prefix_after, suffix_before,
