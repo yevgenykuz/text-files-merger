@@ -21,11 +21,13 @@ args_parser.add_argument('-sort', dest='sort', action='store_true',
 args_parser.add_argument('-prefix_before', dest='prefix_before', default='',
                          help='The prefix to replace in each line before merging. -prefix_after must be provided')
 args_parser.add_argument('-prefix_after', dest='prefix_after', default='',
-                         help='The new prefix each line before merging. -prefix_before must be provided')
+                         help='The new prefix each line before merging. If -prefix_after was not provided, '
+                              'this will be used to strip the prefix by splitting the line and removing the first part')
 args_parser.add_argument('-suffix_before', dest='suffix_before', default='',
                          help='The suffix to replace in each line before merging. -suffix_after must be provided')
 args_parser.add_argument('-suffix_after', dest='suffix_after', default='',
-                         help='The new suffix each line before merging. -suffix_before must be provided')
+                         help='The new suffix each line before merging. If -suffix_before was not provided, '
+                              'this will be used to strip the suffix by splitting the line and removing the last part')
 
 
 class TextFilesMerger:
@@ -91,8 +93,12 @@ class TextFilesMerger:
     def _alter_prefix_and_suffix(self, line):
         if self.prefix_before and self.prefix_after:
             line = line[len(self.prefix_before):] if line.startswith(self.prefix_before) else line
+        elif not self.prefix_before and self.prefix_after:
+            line = line.split(self.prefix_after)[1] if self.prefix_after else line
         if self.suffix_before and self.suffix_after:
             line = line[:-len(self.prefix_before)] if line.endswith(self.prefix_before) else line
+        elif not self.suffix_before and self.suffix_after:
+            line = line.split(self.suffix_after)[0] if self.suffix_after else line
         return line
 
 
