@@ -3,11 +3,11 @@ Text Files Merger
 
 This script does the following:
 
-1. Takes two or more input files
+1. Takes one or more input files
 2. [Optional] Alters prefix and suffix of each line from the input files (in memory, original files are untouched)
 3. [Optional] Removes duplicate lines
 4. [Optional] Sorts lines
-5. Merges all lines and saves result to a new file
+5. Merges (for two or more files) all lines and saves result to a new file
 
 -----
 
@@ -39,7 +39,7 @@ Run with (*see arguments*):
     python merge_files.py
 
 For example, the following will merge, sort, remove duplicates, and strip everything after "_-" suffix (including)
-in all .txt files in the relative "files" directory. Result will be saved to "output.txt" file:
+all .txt files in the relative "files" directory. Result will be saved to "output.txt" file:
 
 .. code-block:: bash
 
@@ -48,6 +48,7 @@ in all .txt files in the relative "files" directory. Result will be saved to "ou
 
 Arguments
 ---------
+
 .. code-block::
 
     usage: merge_files.py [-h] [-p PATH] [-e FILE_EXTENSION] [-o OUT_FILE] [-d]
