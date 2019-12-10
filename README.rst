@@ -7,7 +7,7 @@ This script does the following:
 2. [Optional] Alters prefix and suffix of each line from the input files (in memory, original files are untouched)
 3. [Optional] Removes duplicate lines
 4. [Optional] Sorts lines
-5. Merges (for two or more files) all lines and saves result to a new file
+5. Merges all lines and saves result to a new file
 
 -----
 
